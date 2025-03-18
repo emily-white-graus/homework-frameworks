@@ -1,0 +1,17 @@
+pre-commit:
+  parallel: true
+  commands:
+    biome-format:
+      run: 'npx biome format --write .'
+    biome-lint:
+      run: 'npx biome lint .'
+
+pre-push:
+  parallel: true
+  commands:
+    type-check-react:
+      root: ./react-temp-converter
+      run: npx tsc --noEmit
+    type-check-svelte:
+      root: ./svelte-temp-converter
+      run: npx tsc --noEmit
