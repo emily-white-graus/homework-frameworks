@@ -6,5 +6,8 @@
 	"scripts": {
 		"lint": "npx biome lint .",
 		"lint:format": "npx biome format --write ."
+	},
+	"dependencies": {
+		"@tsconfig/svelte": "^5.0.4"
 	}
 }
