@@ -1,21 +1,21 @@
 // Temperature converter component
-import React, { useState } from "react";
+import React, { useState } from 'react'
 
 function TemperatureConverter() {
-	const [celsius, setCelsius] = useState(0);
-	const [fahrenheit, setFahrenheit] = useState(32);
+	const [celsius, setCelsius] = useState(0)
+	const [fahrenheit, setFahrenheit] = useState(32)
 
 	const handleCelsiusChange = (e) => {
-		const value = e.target.value;
-		setCelsius(value);
-		setFahrenheit(((value * 9) / 5 + 32).toFixed(2));
-	};
+		const value = e.target.value
+		setCelsius(value)
+		setFahrenheit(((value * 9) / 5 + 32).toFixed(2))
+	}
 
 	const handleFahrenheitChange = (e) => {
-		const value = e.target.value;
-		setFahrenheit(value);
-		setCelsius((((value - 32) * 5) / 9).toFixed(2));
-	};
+		const value = e.target.value
+		setFahrenheit(value)
+		setCelsius((((value - 32) * 5) / 9).toFixed(2))
+	}
 
 	return (
 		<div className="temperature-converter">
@@ -44,7 +44,7 @@ function TemperatureConverter() {
 				</div>
 			</div>
 		</div>
-	);
+	)
 }
 
-export default TemperatureConverter;
+export default TemperatureConverter
