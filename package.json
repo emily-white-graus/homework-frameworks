@@ -1,9 +1,10 @@
 {
-  "devDependencies": {
-    "@biomejs/biome": "1.9.4"
-  },
-  "scripts": {
-    "lint": "npx biome lint .",
-    "lint:format": "npx biome format --write ."
-  }
+	"devDependencies": {
+		"@biomejs/biome": "1.9.4",
+		"lefthook": "^1.11.3"
+	},
+	"scripts": {
+		"lint": "npx biome lint .",
+		"lint:format": "npx biome format --write ."
+	}
 }
