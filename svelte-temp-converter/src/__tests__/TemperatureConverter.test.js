@@ -1,11 +1,11 @@
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/svelte'
 import { describe, it, expect } from 'vitest'
-import TemperatureConverter from '../TemperatureConverter'
+import TemperatureConverter from '../TemperatureConverter.svelte'
 
 describe('TemperatureConverter', () => {
 	// Test 1: Component renders correctly?
-	it('renders the component with default values', () => {
-		render(<TemperatureConverter />)
+	it.only('renders the component with default values', () => {
+		render(TemperatureConverter, {})
 
 		// Comprova si el títol es mostra
 		expect(screen.getByText('Temperature Converter')).toBeInTheDocument()
@@ -21,7 +21,7 @@ describe('TemperatureConverter', () => {
 
 	// Test 2: Celsius to Fahrenheit?
 	it('converts Celsius to Fahrenheit correctly', () => {
-		render(<TemperatureConverter />)
+		render(TemperatureConverter, {})
 
 		const celsiusInput = screen.getByLabelText(/celsius/i)
 
@@ -35,7 +35,7 @@ describe('TemperatureConverter', () => {
 
 	// Test 3: Fahrenheit to Celsius?
 	it('converts Fahrenheit to Celsius correctly', () => {
-		render(<TemperatureConverter />)
+		render(TemperatureConverter, {})
 
 		const fahrenheitInput = screen.getByLabelText(/fahrenheit/i)
 
