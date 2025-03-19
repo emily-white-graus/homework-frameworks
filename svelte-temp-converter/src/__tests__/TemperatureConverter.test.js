@@ -1,7 +1,7 @@
 import { render, screen, cleanup } from '@testing-library/svelte'
 import { describe, it, expect, afterEach } from 'vitest'
 import TemperatureConverter from '../TemperatureConverter.svelte'
-import user from "@testing-library/user-event"
+import user from '@testing-library/user-event'
 
 describe('TemperatureConverter', () => {
 	afterEach(cleanup)
@@ -28,7 +28,7 @@ describe('TemperatureConverter', () => {
 		const celsiusInput = screen.getByLabelText(/celsius/i)
 
 		// Canvia Celsius a 100
-		await user.type(celsiusInput, "100")
+		await user.type(celsiusInput, '100')
 
 		// Fahrenheit hauria de ser 212
 		const fahrenheitInput = screen.getByLabelText(/fahrenheit/i)
@@ -43,7 +43,7 @@ describe('TemperatureConverter', () => {
 
 		// Canvia Fahrenheit a 212
 		await user.clear(fahrenheitInput)
-		await user.type(fahrenheitInput, "212")
+		await user.type(fahrenheitInput, '212')
 
 		// Celsius hauria de ser 100
 		const celsiusInput = screen.getByLabelText(/celsius/i)

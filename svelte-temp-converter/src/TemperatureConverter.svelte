@@ -1,24 +1,24 @@
 <script>
-	let celsius = "0";
-	let fahrenheit = "32";
+let celsius = '0'
+let fahrenheit = '32'
 
-	function handleCelsiusChange(event) {
-		celsius = event.target.value;
-		if (celsius !== "") {
-			fahrenheit = ((Number(celsius) * 9) / 5 + 32).toFixed(2);
-		} else {
-			fahrenheit = "";
-		}
+function handleCelsiusChange(event) {
+	celsius = event.target.value
+	if (celsius !== '') {
+		fahrenheit = ((Number(celsius) * 9) / 5 + 32).toFixed(2)
+	} else {
+		fahrenheit = ''
 	}
+}
 
-	function handleFahrenheitChange(event) {
-		fahrenheit = event.target.value;
-		if (fahrenheit !== "") {
-			celsius = (((Number(fahrenheit) - 32) * 5) / 9).toFixed(2);
-		} else {
-			celsius = "";
-		}
+function handleFahrenheitChange(event) {
+	fahrenheit = event.target.value
+	if (fahrenheit !== '') {
+		celsius = (((Number(fahrenheit) - 32) * 5) / 9).toFixed(2)
+	} else {
+		celsius = ''
 	}
+}
 </script>
 
 <div class="temperature-converter">
