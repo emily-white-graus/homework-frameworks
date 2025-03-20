@@ -39,13 +39,13 @@ jobs:
       - name: Run tests
         run: npm run test:unit
         
-      - name: Deploy to Vercel
-        if: success() && github.ref == 'refs/heads/main'
-        uses: amondnet/vercel-action@v25.0.0
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_SVELTE }}
-          working-directory: ./svelte-temp-converter
-          vercel-args: '--prod'
+  deploy:
+    name: Deploy to Vercel
+    needs: [lint-format-test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        
+      - name: Deploy Svelte to Vercel
+        run: npx vercel --prod --yes --token=${{ secrets.VERCEL_TOKEN }}

@@ -49,6 +49,3 @@ jobs:
 
       - name: Deploy React to Vercel
         run: npx vercel --prod --yes --token=${{ secrets.VERCEL_TOKEN }}
-
-      - name: Deploy Svelte to Vercel
-        run: npx vercel --prod --yes --token=${{ secrets.VERCEL_TOKEN }}
