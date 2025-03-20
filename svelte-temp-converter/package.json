@@ -8,8 +8,8 @@
 		"build": "vite build",
 		"preview": "vite preview",
 		"lint": "npx biome lint .",
- 		"format": "npx biome format . --write",
-  		"format:check": "npx biome format .",
+		"format": "npx biome format . --write",
+		"format:check": "npx biome format .",
 		"test:unit": "vitest run",
 		"test:watch": "vitest"
 	},
