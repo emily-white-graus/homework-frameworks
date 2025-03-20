@@ -1,0 +1,40 @@
+name: Svelte Temperature Converter CI
+
+on:
+  push:
+    paths:
+      - 'svelte-temp-converter/**'
+  pull_request:
+    paths:
+      - 'svelte-temp-converter/**'
+
+jobs:
+  lint-format-test:
+    runs-on: ubuntu-latest
+    
+    defaults:
+      run:
+        working-directory: ./svelte-temp-converter
+        
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: './svelte-temp-converter/package-lock.json'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Check linting
+        run: npm run lint
+        
+      - name: Check formatting
+        run: npm run format:check
+        
+      - name: Run tests
+        run: npm run test

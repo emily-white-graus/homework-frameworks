@@ -6,7 +6,9 @@
 	"scripts": {
 		"dev": "vite",
 		"build": "vite build",
-		"lint": "eslint .",
+		"lint": "npx biome lint .",
+  		"format": "npx biome format . --write",
+  		"format:check": "npx biome format .",
 		"preview": "vite preview",
 		"test:unit": "vitest run",
 		"test:watch": "vitest"
