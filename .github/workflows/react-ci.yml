@@ -41,7 +41,7 @@ jobs:
         
   deploy:
     name: Deploy to Vercel
-    needs: [lint, test]
+    needs: [lint-format-test]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
