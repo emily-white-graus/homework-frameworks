@@ -1,4 +1,4 @@
-name: Svelte Temperature Converter CI
+name: Svelte Temperature Converter CI/CD
 
 on:
   push:
@@ -38,3 +38,14 @@ jobs:
         
       - name: Run tests
         run: npm run test:unit
+        
+      - name: Deploy to Vercel
+        if: success() && github.ref == 'refs/heads/main'
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_SVELTE }}
+          working-directory: ./svelte-temp-converter
+          vercel-args: '--prod'
