@@ -2,11 +2,11 @@ name: React Temperature Converter CI/CD
 
 on:
   push:
-    paths:
-      - 'react-temp-converter/**'
+    branches:
+      - main
   pull_request:
-    paths:
-      - 'react-temp-converter/**'
+    branches:
+      - main
 
 jobs:
   lint-format-test:
