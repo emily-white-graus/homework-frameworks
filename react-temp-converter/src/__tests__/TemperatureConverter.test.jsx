@@ -25,8 +25,8 @@ describe('TemperatureConverter', () => {
 
 		const celsiusInput = screen.getByLabelText(/celsius/i)
 
-		// Canvia Celsius a 100
-		fireEvent.change(celsiusInput, { target: { value: '100' } })
+		// Canvia Celsius a 100 (messed up test, should be 100)
+		fireEvent.change(celsiusInput, { target: { value: '200' } })
 
 		// Fahrenheit hauria de ser 212
 		const fahrenheitInput = screen.getByLabelText(/fahrenheit/i)
