@@ -40,23 +40,16 @@ jobs:
         run: npm run test:unit
 
   deploy:
-    needs: lint-format-test
-    if: success() && github.ref == 'refs/heads/main'
+    name: Deploy to Vercel
+    needs: [lint-format-test]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    
     defaults:
       run:
         working-directory: ./react-temp-converter
-    
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      
-      - name: Install Vercel CLI
-        run: npm install -g vercel
-      
-      - name: Deploy to Vercel
-        run: |
-          echo "VERCEL_ORG_ID=${{ secrets.VERCEL_ORG_ID }}" >> $GITHUB_ENV
-          echo "VERCEL_PROJECT_ID=${{ secrets.VERCEL_PROJECT_ID_REACT }}" >> $GITHUB_ENV
-          vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --yes
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+         
+      - name: Deploy React to Vercel
+        run: npx vercel --prod --yes --token=${{ secrets.VERCEL_TOKEN }} --cwd ./react-temp-converter
