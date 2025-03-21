@@ -44,12 +44,10 @@ jobs:
     needs: [lint-format-test]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./react-temp-converter
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
          
       - name: Deploy React to Vercel
-        run: npx vercel --prod --yes --token=${{ secrets.VERCEL_TOKEN }} --cwd ./react-temp-converter
+        working-directory: ./react-temp-converter
+        run: npx vercel --prod --yes --token=${{ secrets.VERCEL_TOKEN }}
