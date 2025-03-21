@@ -40,20 +40,13 @@ jobs:
         run: npm run test:unit
 
   deploy:
-    name: Deploy to Vercel
-    needs: [lint-format-test]
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+     name: Deploy to Vercel
+     needs: [lint-format-test]
+     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+     runs-on: ubuntu-latest
+     steps:
+       - name: Checkout Repository
+         uses: actions/checkout@v4
          
-      - name: Deploy to Vercel
-        uses: amondnet/vercel-action@v25
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_REACT }}
-          working-directory: ./react-temp-converter
-          vercel-args: '--prod'
+       - name: Deploy React to Vercel
+         run: npx vercel --prod --yes --token=${{ secrets.VERCEL_TOKEN }}
