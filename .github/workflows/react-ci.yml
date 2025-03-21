@@ -37,15 +37,26 @@ jobs:
         run: npm run format:check
         
       - name: Run tests
-        run: npm run test:unit
-        
+        run: npm run test
+
+  deploy:
+    needs: lint-format-test
+    if: success() && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    
+    defaults:
+      run:
+        working-directory: ./react-temp-converter
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Install Vercel CLI
+        run: npm install -g vercel
+      
       - name: Deploy to Vercel
-        if: success() && github.ref == 'refs/heads/main'
-        uses: amondnet/vercel-action@v25
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_REACT }}
-          working-directory: ./react-temp-converter
-          vercel-args: '--prod'
+        run: |
+          echo "VERCEL_ORG_ID=${{ secrets.VERCEL_ORG_ID }}" >> $GITHUB_ENV
+          echo "VERCEL_PROJECT_ID=${{ secrets.VERCEL_PROJECT_ID_REACT }}" >> $GITHUB_ENV
+          vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --yes
