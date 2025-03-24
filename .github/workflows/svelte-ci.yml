@@ -40,12 +40,12 @@ jobs:
         run: npm run test:unit
 
   deploy:
-     name: Deploy to Vercel
+     name: Deploy to Netlify
      needs: [lint-format-test]
      runs-on: ubuntu-latest
      steps:
        - name: Checkout Repository
          uses: actions/checkout@v4
          
-       - name: Deploy Svelte to Vercel
-         run: npx netlify --dir svelte-temp-converter --prod --site=${{ secrets.NETLIFY_SIDE_ID_SVELTE }} --auth=${{ secrets.NETLIFY_TOKEN }}
+       - name: Deploy Svelte to Netlify
+         run: npx netlify --dir=svelte-temp-converter --prod --site=${{ secrets.NETLIFY_SIDE_ID_SVELTE }} --auth=${{ secrets.NETLIFY_TOKEN }}
