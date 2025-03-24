@@ -40,12 +40,12 @@ jobs:
         run: npm run test:unit
 
   deploy:
-     name: Deploy to Vercel
+     name: Deploy to Netlify
      needs: [lint-format-test]
      runs-on: ubuntu-latest
      steps:
        - name: Checkout Repository
          uses: actions/checkout@v4
          
-       - name: Deploy React to Vercel
-         run: npx vercel --prod --yes --token=${{ secrets.VERCEL_TOKEN }}
+       - name: Deploy React to Netlify
+         run: npx netlify --dir react-temp-converter --prod --site=${{ secrets.NETLIFY_SIDE_ID_REACT }} --auth=${{ secrets.NETLIFY_TOKEN }}

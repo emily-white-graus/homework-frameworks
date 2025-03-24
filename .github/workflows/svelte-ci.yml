@@ -48,4 +48,4 @@ jobs:
          uses: actions/checkout@v4
          
        - name: Deploy Svelte to Vercel
-         run: npx vercel --prod --yes --token=${{ secrets.VERCEL_TOKEN }}
+         run: npx netlify --dir svelte-temp-converter --prod --site=${{ secrets.NETLIFY_SIDE_ID_SVELTE }} --auth=${{ secrets.NETLIFY_TOKEN }}
