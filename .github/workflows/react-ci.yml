@@ -41,7 +41,7 @@ jobs:
 
   deploy:
     name: Deploy to Netlify
-    needs: [lint, test]
+    needs: [lint-format-test]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -58,11 +58,11 @@ jobs:
 
       - name: Build React App
         run: |
-          npm install --prefix react
-          npm run build --prefix react
+          npm install --prefix react-temp-converter
+          npm run build --prefix react-temp-converter
 
       - name: Deploy React to Netlify
         env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
+          NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
         run: |
-          npx netlify deploy --prod --dir=react/dist --site=${{ secrets.NETLIFY_SITE_ID_REACT }}
+          npx netlify deploy --prod --dir=react-temp-converter/dist --site=${{ secrets.NETLIFY_SITE_ID_REACT }}
