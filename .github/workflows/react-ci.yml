@@ -40,12 +40,29 @@ jobs:
         run: npm run test:unit
 
   deploy:
-     name: Deploy to Netlify
-     needs: [lint-format-test]
-     runs-on: ubuntu-latest
-     steps:
-       - name: Checkout Repository
-         uses: actions/checkout@v4
-         
-       - name: Deploy React to Netlify
-         run: npx netlify deploy --dir react-temp-converter --prod --site=${{ secrets.NETLIFY_SIDE_ID_REACT }} --auth=${{ secrets.NETLIFY_TOKEN }}
+    name: Deploy to Netlify
+    needs: [lint, test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install Netlify CLI
+        run: npm install -g netlify-cli
+
+      - name: Build React App
+        run: |
+          npm install --prefix react
+          npm run build --prefix react
+
+      - name: Deploy React to Netlify
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
+        run: |
+          npx netlify deploy --prod --dir=react/dist --site=${{ secrets.NETLIFY_SITE_ID_REACT }}

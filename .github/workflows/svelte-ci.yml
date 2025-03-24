@@ -40,12 +40,29 @@ jobs:
         run: npm run test:unit
 
   deploy:
-     name: Deploy to Netlify
-     needs: [lint-format-test]
-     runs-on: ubuntu-latest
-     steps:
-       - name: Checkout Repository
-         uses: actions/checkout@v4
-         
-       - name: Deploy Svelte to Netlify
-         run: npx netlify deploy --dir=svelte-temp-converter --prod --site=${{ secrets.NETLIFY_SIDE_ID_SVELTE }} --auth=${{ secrets.NETLIFY_TOKEN }}
+    name: Deploy to Netlify
+    needs: [lint, test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install Netlify CLI
+        run: npm install -g netlify-cli
+
+      - name: Build Svelte App
+        run: |
+          npm install --prefix svelte
+          npm run build --prefix svelte
+
+      - name: Deploy Svelte to Netlify
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
+        run: |
+          npx netlify deploy --prod --dir=svelte/dist --site=${{ secrets.NETLIFY_SITE_ID_SVELTE }}
