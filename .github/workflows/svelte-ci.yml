@@ -62,7 +62,5 @@ jobs:
           npm run build --prefix svelte-temp-converter
 
       - name: Deploy Svelte to Netlify
-        env:
-          NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
         run: |
-          npx netlify deploy --prod --dir=svelte-temp-converter/dist --site=${{ secrets.NETLIFY_SITE_ID_SVELTE }}
+          npx netlify deploy --prod --dir=svelte-temp-converter/dist --site=${{ secrets.NETLIFY_SITE_ID_SVELTE }} --auth=${{ secrets.NETLIFY_TOKEN }}
