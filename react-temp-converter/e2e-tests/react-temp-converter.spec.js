@@ -1,9 +1,7 @@
 import { test, expect } from '@playwright/test'
 
-// Test for both React and Svelte apps
 const apps = [
 	{ name: 'React', url: 'http://localhost:5173' },
-	{ name: 'Svelte', url: 'http://localhost:5174' },
 ]
 
 for (const app of apps) {

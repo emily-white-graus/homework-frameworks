@@ -25,7 +25,6 @@
 		"jsdom": "^26.0.0",
 		"svelte": "^5.20.2",
 		"vite": "^6.2.0",
-		"vitest": "^3.0.9",
-		"@playwright/test": "^1.51.1"
+		"vitest": "^3.0.9"
 	}
 }
