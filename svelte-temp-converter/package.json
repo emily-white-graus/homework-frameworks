@@ -1,30 +1,32 @@
 {
-	"name": "svelte-temp-converter",
-	"private": true,
-	"version": "0.0.0",
-	"type": "module",
-	"scripts": {
-		"dev": "vite",
-		"build": "vite build",
-		"preview": "vite preview",
-		"lint": "npx biome lint .",
-		"format": "npx biome format . --write",
-		"format:check": "npx biome format .",
-		"test:unit": "vitest run",
-		"test:watch": "vitest",
-		"test:e2e": "playwright test",
-		"test:e2e:headed": "playwright test --headed",
-		"test:e2e:debug": "playwright test --debug"
-	},
-	"devDependencies": {
-		"@sveltejs/vite-plugin-svelte": "^5.0.3",
-		"@testing-library/jest-dom": "^6.6.3",
-		"@testing-library/svelte": "^5.2.7",
-		"@testing-library/user-event": "^14.6.1",
-		"happy-dom": "^17.4.4",
-		"jsdom": "^26.0.0",
-		"svelte": "^5.20.2",
-		"vite": "^6.2.0",
-		"vitest": "^3.0.9"
-	}
+  "name": "svelte-temp-converter",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "npx biome lint .",
+    "format": "npx biome format . --write",
+    "format:check": "npx biome format .",
+    "test:unit": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "test:e2e:headed": "playwright test --headed",
+    "test:e2e:debug": "playwright test --debug"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.51.1",
+    "@sveltejs/vite-plugin-svelte": "^5.0.3",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/svelte": "^5.2.7",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/node": "^22.13.13",
+    "happy-dom": "^17.4.4",
+    "jsdom": "^26.0.0",
+    "svelte": "^5.20.2",
+    "vite": "^6.2.0",
+    "vitest": "^3.0.9"
+  }
 }

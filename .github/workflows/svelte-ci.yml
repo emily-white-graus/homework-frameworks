@@ -41,6 +41,12 @@ jobs:
       - name: Run tests
         run: npm run test:unit
 
+      - name: Start Svelte App in Background
+        run: npm run dev &
+
+      - name: Build
+        run: npm run build
+
       - name: Run E2E tests
         run: npm run test:e2e
 
