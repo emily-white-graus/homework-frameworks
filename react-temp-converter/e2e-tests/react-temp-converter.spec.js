@@ -1,8 +1,6 @@
 import { test, expect } from '@playwright/test'
 
-const apps = [
-	{ name: 'React', url: 'http://localhost:5174' },
-]
+const apps = [{ name: 'React', url: 'http://localhost:5174' }]
 
 for (const app of apps) {
 	test.describe(`Temperature Converter - ${app.name}`, () => {
