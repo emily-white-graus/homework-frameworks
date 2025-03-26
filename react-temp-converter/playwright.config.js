@@ -14,6 +14,10 @@ import { defineConfig, devices } from '@playwright/test'
  */
 export default defineConfig({
 	testDir: './e2e-tests',
+  timeout: 30 * 1000,
+  expect:{
+    timeout: 5000
+  },
 	/* Run tests in files in parallel */
 	fullyParallel: true,
 	/* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -23,15 +27,14 @@ export default defineConfig({
 	/* Opt out of parallel tests on CI. */
 	workers: process.env.CI ? 1 : undefined,
 	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
-	reporter: 'html',
+	reporter: 'list',
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
 	use: {
 		/* Base URL to use in actions like `await page.goto('/')`. */
-		baseURL: process.env.CI
-			? 'https://your-app.netlify.app'
-			: 'http://localhost:5174',
+		baseURL: 'http://localhost:5174',
+    headless: true,
 
-		/* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
+		/* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-vier */
 		trace: 'on-first-retry',
 	},
 
@@ -67,12 +70,8 @@ export default defineConfig({
 		//   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
 		// },
 	],
-
-	/* Run your local dev server before starting the tests */
-	webServer: {
-		command: 'npm run dev',
-		url: 'http://localhost:5174',
-		timeout: 120 * 1000, // Wait up to 60 seconds for the server to start
-		reuseExistingServer: !process.env.CI,
-	},
+  webServer: [{
+     command: "npm run dev -- --port=3030",
+     url: 'http://localhost:3030',
+}]
 })
