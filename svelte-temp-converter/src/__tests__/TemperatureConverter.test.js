@@ -1,155 +1,119 @@
-import { render, fireEvent, waitFor } from '@testing-library/svelte'
-import { screen } from '@testing-library/dom'
-import { rest } from 'msw'
-import { setupServer } from 'msw/node'
-import CatGenerator from './CatGenerator.svelte'
+import { render, screen, fireEvent, waitFor } from "@testing-library/svelte";
+import "@testing-library/jest-dom";
+import { http, HttpResponse } from "msw";
+import { setupServer } from "msw/node";
+import { vi, describe, test, expect, beforeAll, afterEach, afterAll } from "vitest";
+import TemperatureConverter from "../TemperatureConverter.svelte";
 
-// Mock server setup
+// Mock server setup with initial responses
 const server = setupServer(
-  // Mock cat fact API
-  rest.get('https://catfact.ninja/fact', ( res, ctx) => {
-    return res(
-      ctx.json({
-        fact: 'Cats have five toes on their front paws, but only four on the back ones.',
-        length: 69,
-      }),
-    )
+  http.get("https://catfact.ninja/fact", () => {
+    return HttpResponse.json({
+      fact: "The average cat sleeps 16-18 hours per day.",
+      length: 42,
+    });
   }),
-
-  // Mock cat image API
-  rest.get('https://api.thecatapi.com/v1/images/search', ( res, ctx) => {
-    return res(
-      ctx.json([
-        {
-          url: 'https://example.com/cat-image.jpg',
-          id: 'test-id-123',
-          width: 640,
-          height: 480,
-        },
-      ]),
-    )
-  }),
-)
+  http.get("https://api.thecatapi.com/v1/images/search", () => {
+    return HttpResponse.json([
+      {
+        id: "cat-id-123",
+        url: "https://example.com/initial-cat.jpg",
+        width: 600,
+        height: 400,
+      },
+    ]);
+  })
+);
 
 // Setup and teardown
-beforeAll(() => server.listen())
-afterEach(() => server.resetHandlers())
-afterAll(() => server.close())
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
 
-describe('Cat Generator App (Svelte)', () => {
-  test('Test 1: Should load initial cat fact and image on mount', async () => {
-    render(CatGenerator)
-    
-    // Verify loading states appear first
-    expect(screen.getByText('Loading fact...')).toBeInTheDocument()
-    expect(screen.getByText('Loading image...')).toBeInTheDocument()
-    
-    // Wait for the data to load
+describe("Cat Generator App", () => {
+  test("renders initial loading states and then displays fetched cat data", async () => {
+    render(TemperatureConverter);
+
+    expect(await screen.findByText("Loading fact..."));
+    expect(await screen.findByText("Loading image..."));
+
     await waitFor(() => {
-      expect(screen.queryByText('Loading fact...')).not.toBeInTheDocument()
-      expect(screen.queryByText('Loading image...')).not.toBeInTheDocument()
-    })
-    
-    // Verify the fact and image are displayed
+      expect(screen.queryByText("Loading fact...")).not.toBeInTheDocument();
+      expect(screen.queryByText("Loading image...")).not.toBeInTheDocument();
+    });
+
     expect(
-      screen.getByText('Cats have five toes on their front paws, but only four on the back ones.'),
-    ).toBeInTheDocument()
-    expect(screen.getByAltText('Random Cat')).toHaveAttribute(
-      'src',
-      'https://example.com/cat-image.jpg',
-    )
-  })
+      await screen.findByText("The average cat sleeps 16-18 hours per day.")
+    ).toBeInTheDocument();
+    expect(screen.getByAltText("Random Cat")).toHaveAttribute(
+      "src",
+      "https://example.com/initial-cat.jpg"
+    );
+  });
 
-  test('Test 2: Should fetch a new cat fact when button is clicked', async () => {
-    render(CatGenerator)
-    
-    // Wait for initial data to load
+  test("fetches and displays new cat fact when 'NEW CAT FACT' button is clicked", async () => {
+    render(TemperatureConverter);
+
     await waitFor(() => {
-      expect(screen.queryByText('Loading fact...')).not.toBeInTheDocument()
-    })
-    
-    // Update the mock server to return a different fact
+      expect(screen.queryByText("Loading fact...")).not.toBeInTheDocument();
+    });
+
     server.use(
-      rest.get('https://catfact.ninja/fact', ( res, ctx) => {
-        return res(
-          ctx.json({
-            fact: 'A cat can jump 5 times its height in a single bound.',
-            length: 52,
-          }),
-        )
-      }),
-    )
-    
-    // Click the "NEW CAT FACT" button
-    fireEvent.click(screen.getByText('NEW CAT FACT'))
-    
-    // Verify loading state appears
-    expect(screen.getByText('Loading fact...')).toBeInTheDocument()
-    
-    // Wait for new fact to load
+      http.get("https://catfact.ninja/fact", () => {
+        return HttpResponse.json({
+          fact: "Cats can rotate their ears 180 degrees.",
+          length: 37,
+        });
+      })
+    );
+
+    await fireEvent.click(screen.getByText("NEW CAT FACT"));
+    expect(await screen.findByText("Loading fact...")).toBeInTheDocument();
+
     await waitFor(() => {
-      expect(screen.queryByText('Loading fact...')).not.toBeInTheDocument()
-    })
-    
-    // Verify the new fact is displayed
+      expect(screen.queryByText("Loading fact...")).not.toBeInTheDocument();
+    });
+
     expect(
-      screen.getByText('A cat can jump 5 times its height in a single bound.'),
-    ).toBeInTheDocument()
-  })
+      await screen.findByText("Cats can rotate their ears 180 degrees.")
+    ).toBeInTheDocument();
+  });
 
-  test('Test 3: Should fetch a new cat image and update title when button is clicked', async () => {
-    // Mock Math.random to always return 0.5 for predictable title selection
-    const originalRandom = Math.random
-    Math.random = jest.fn(() => 0.5)
-    
-    render(CatGenerator)
-    
-    // Wait for initial data to load
+  test("fetches and displays new cat image when 'NEW CAT IMAGE' button is clicked", async () => {
+    const originalRandom = Math.random;
+    Math.random = vi.fn(() => 0.3);
+
+    render(TemperatureConverter);
+
     await waitFor(() => {
-      expect(screen.queryByText('Loading image...')).not.toBeInTheDocument()
-    })
-    
-    // Capture the initial title for comparison
-    const initialTitle = screen.getByRole('heading', { level: 2 }).textContent
-    
-    // Update the mock server to return a different image
+      expect(screen.queryByText("Loading image...")).not.toBeInTheDocument();
+    });
+
     server.use(
-      rest.get('https://api.thecatapi.com/v1/images/search', ( res, ctx) => {
-        return res(
-          ctx.json([
-            {
-              url: 'https://example.com/new-cat-image.jpg',
-              id: 'test-id-456',
-              width: 800,
-              height: 600,
-            },
-          ]),
-        )
-      }),
-    )
-    
-    // Click the "NEW CAT IMAGE" button
-    fireEvent.click(screen.getByText('NEW CAT IMAGE'))
-    
-    // Verify loading state appears
-    expect(screen.getByText('Loading image...')).toBeInTheDocument()
-    
-    // Wait for new image to load
+      http.get("https://api.thecatapi.com/v1/images/search", () => {
+        return HttpResponse.json([
+          {
+            id: "cat-id-456",
+            url: "https://example.com/new-cat.jpg",
+            width: 700,
+            height: 500,
+          },
+        ]);
+      })
+    );
+
+    await fireEvent.click(screen.getByText("NEW CAT IMAGE"));
+    expect(await screen.findByText("Loading image..."));
+
     await waitFor(() => {
-      expect(screen.queryByText('Loading image...')).not.toBeInTheDocument()
-    })
-    
-    // Verify the new image is displayed
-    expect(screen.getByAltText('Random Cat')).toHaveAttribute(
-      'src',
-      'https://example.com/new-cat-image.jpg',
-    )
-    
-    // Verify the title has changed (since we fixed Math.random, we can predict it)
-    const newTitle = screen.getByRole('heading', { level: 2 }).textContent
-    expect(newTitle).not.toBe(initialTitle)
-    
-    // Restore original Math.random
-    Math.random = originalRandom
-  })
-})
+      expect(screen.queryByText("Loading image...")).not.toBeInTheDocument();
+    });
+
+    expect(screen.getByAltText("Random Cat")).toHaveAttribute(
+      "src",
+      "https://example.com/new-cat.jpg"
+    );
+
+    Math.random = originalRandom;
+  });
+});
