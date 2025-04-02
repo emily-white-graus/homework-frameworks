@@ -78,6 +78,7 @@ describe('Cat Generator App', () => {
 		server.use(
 			http.get('https://catfact.ninja/fact', () => {
 				return HttpResponse.json({
+					//Should be Cats can rotate their ears 180 degrees.
 					fact: 'Cats can rotate their ears 180 degrees.',
 					length: 37,
 				})
