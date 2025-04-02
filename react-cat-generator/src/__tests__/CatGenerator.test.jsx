@@ -12,7 +12,7 @@ import {
 	afterEach,
 	afterAll,
 } from 'vitest'
-import TemperatureConverter from '../TemperatureConverter'
+import CatGenerator from '../CatGenerator'
 
 // Mock server setup with initial responses
 const server = setupServer(
@@ -44,7 +44,7 @@ afterAll(() => server.close())
 
 describe('Cat Generator App', () => {
 	test('renders initial loading states and then displays fetched cat data', async () => {
-		render(<TemperatureConverter />)
+		render(<CatGenerator />)
 
 		// Initially, loading indicators should be visible
 		expect(screen.getByText('Loading fact...')).toBeInTheDocument()
@@ -67,7 +67,7 @@ describe('Cat Generator App', () => {
 	})
 
 	test("fetches and displays new cat fact when 'NEW CAT FACT' button is clicked", async () => {
-		render(<TemperatureConverter />)
+		render(<CatGenerator />)
 
 		// Wait for initial data to load
 		await waitFor(() => {
@@ -107,7 +107,7 @@ describe('Cat Generator App', () => {
 		const originalRandom = Math.random
 		Math.random = vi.fn(() => 0.3)
 
-		render(<TemperatureConverter />)
+		render(<CatGenerator />)
 
 		// Wait for initial data to load
 		await waitFor(() => {

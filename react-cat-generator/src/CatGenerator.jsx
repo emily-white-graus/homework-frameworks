@@ -1,4 +1,3 @@
-// Temperature converter component
 import React, { useCallback, useEffect, useReducer } from 'react'
 
 // generic fetch reducer to be used for fact + image

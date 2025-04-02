@@ -1,4 +1,4 @@
-name: React Temperature Converter CI/CD
+name: React Cat Generator CI/CD
 
 on:
   push:
@@ -14,7 +14,7 @@ jobs:
     
     defaults:
       run:
-        working-directory: ./react-temp-converter
+        working-directory: ./react-cat-generator
         
     steps:
       - name: Checkout code
@@ -25,7 +25,7 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
-          cache-dependency-path: './react-temp-converter/package-lock.json'
+          cache-dependency-path: './react-cat-generator/package-lock.json'
           
       - name: Install dependencies
         run: |
@@ -69,9 +69,9 @@ jobs:
 
       - name: Build React App
         run: |
-          npm install --prefix react-temp-converter
-          npm run build --prefix react-temp-converter
+          npm install --prefix react-cat-generator
+          npm run build --prefix react-cat-generator
 
       - name: Deploy React to Netlify
         run: |
-          npx netlify deploy --prod --dir=react-temp-converter/dist --site=${{ secrets.NETLIFY_SITE_ID_REACT }} --auth=${{ secrets.NETLIFY_TOKEN }}
+          npx netlify deploy --prod --dir=react-cat-generator/dist --site=${{ secrets.NETLIFY_SITE_ID_REACT }} --auth=${{ secrets.NETLIFY_TOKEN }}

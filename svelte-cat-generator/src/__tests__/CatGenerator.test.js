@@ -11,7 +11,7 @@ import {
 	afterEach,
 	afterAll,
 } from 'vitest'
-import TemperatureConverter from '../TemperatureConverter.svelte'
+import CatGenerator from '../CatGenerator.svelte'
 
 // Mock server setup with initial responses
 const server = setupServer(
@@ -40,7 +40,7 @@ afterAll(() => server.close())
 
 describe('Cat Generator App', () => {
 	test('renders initial loading states and then displays fetched cat data', async () => {
-		render(TemperatureConverter)
+		render(CatGenerator)
 
 		expect(await screen.findByText('Loading fact...'))
 		expect(await screen.findByText('Loading image...'))
@@ -60,7 +60,7 @@ describe('Cat Generator App', () => {
 	})
 
 	test("fetches and displays new cat fact when 'NEW CAT FACT' button is clicked", async () => {
-		render(TemperatureConverter)
+		render(CatGenerator)
 
 		await waitFor(() => {
 			expect(screen.queryByText('Loading fact...')).not.toBeInTheDocument()
@@ -91,7 +91,7 @@ describe('Cat Generator App', () => {
 		const originalRandom = Math.random
 		Math.random = vi.fn(() => 0.3)
 
-		render(TemperatureConverter)
+		render(CatGenerator)
 
 		await waitFor(() => {
 			expect(screen.queryByText('Loading image...')).not.toBeInTheDocument()

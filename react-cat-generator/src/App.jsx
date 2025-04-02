@@ -1,11 +1,11 @@
 import React from 'react'
 import './App.css'
-import TemperatureConverter from './TemperatureConverter'
+import CatGenerator from './CatGenerator'
 
 function App() {
 	return (
 		<div className="App">
-			<TemperatureConverter />
+			<CatGenerator />
 		</div>
 	)
 }

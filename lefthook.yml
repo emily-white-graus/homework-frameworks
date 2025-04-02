@@ -10,8 +10,8 @@ pre-push:
   parallel: true
   commands:
     type-check-react:
-      root: ./react-temp-converter
+      root: ./react-cat-generator
       run: npx tsc --noEmit
     type-check-svelte:
-      root: ./svelte-temp-converter
+      root: ./svelte-cat-generator
       run: npx tsc --noEmit

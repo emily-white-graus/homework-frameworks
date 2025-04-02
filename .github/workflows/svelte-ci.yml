@@ -1,4 +1,4 @@
-name: Svelte Temperature Converter CI/CD
+name: Svelte Cat Generator CI/CD
 
 on:
   push:
@@ -14,7 +14,7 @@ jobs:
     
     defaults:
       run:
-        working-directory: ./svelte-temp-converter
+        working-directory: ./svelte-cat-generator
         
     steps:
       - name: Checkout code
@@ -25,7 +25,7 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
-          cache-dependency-path: './svelte-temp-converter/package-lock.json'
+          cache-dependency-path: './svelte-cat-generator/package-lock.json'
           
       - name: Install dependencies
         run: |
@@ -69,9 +69,9 @@ jobs:
 
       - name: Build Svelte App
         run: |
-          npm install --prefix svelte-temp-converter
-          npm run build --prefix svelte-temp-converter
+          npm install --prefix svelte-cat-generator
+          npm run build --prefix svelte-cat-generator
 
       - name: Deploy Svelte to Netlify
         run: |
-          npx netlify deploy --prod --dir=svelte-temp-converter/dist --site=${{ secrets.NETLIFY_SITE_ID_SVELTE }} --auth=${{ secrets.NETLIFY_TOKEN }}
+          npx netlify deploy --prod --dir=svelte-cat-generator/dist --site=${{ secrets.NETLIFY_SITE_ID_SVELTE }} --auth=${{ secrets.NETLIFY_TOKEN }}
