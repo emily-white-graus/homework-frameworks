@@ -43,6 +43,11 @@ jobs:
           cd ./react-cat-generator
           npm run test:unit
 
+      - name: Install Root dependencies
+        run: |
+          npm ci
+          npx playwright install --with-deps
+
       - name: Start React App in Background
         run: |
           cd ./react-cat-generator
@@ -53,14 +58,9 @@ jobs:
           cd ./react-cat-generator
           npm run build
 
-      - name: Install Root dependencies
-        run: |
-          npm ci
-          npx playwright install --with-deps
-
       - name: Run E2E tests
         run: |
-          npm run test
+          npm run test:e2e
 
 
   deploy:
