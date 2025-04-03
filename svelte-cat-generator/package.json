@@ -11,10 +11,7 @@
 		"format": "npx biome format . --write",
 		"format:check": "npx biome format .",
 		"test:unit": "vitest run",
-		"test:watch": "vitest",
-		"test:e2e": "playwright test",
-		"test:e2e:headed": "playwright test --headed",
-		"test:e2e:debug": "playwright test --debug"
+		"test:watch": "vitest"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.51.1",

@@ -32,20 +32,14 @@ for (const app of apps) {
 			if (app.name === 'React') {
 				await page.waitForSelector('.loading-text', {
 					state: 'visible',
-					timeout: 5000,
 				})
 				await page.waitForSelector('.loading-text', {
 					state: 'hidden',
-					timeout: 5000,
 				})
 			} else {
 				// For Svelte, wait for the loading state to be applied and then removed
-				await expect(page.locator('button.fact-btn')).toBeDisabled({
-					timeout: 5000,
-				})
-				await expect(page.locator('button.fact-btn')).toBeEnabled({
-					timeout: 5000,
-				})
+				await expect(page.locator('button.fact-btn')).toBeDisabled({})
+				await expect(page.locator('button.fact-btn')).toBeEnabled({})
 			}
 
 			// Get the updated fact text
@@ -81,20 +75,14 @@ for (const app of apps) {
 			if (app.name === 'React') {
 				await page.waitForSelector('.loading', {
 					state: 'visible',
-					timeout: 5000,
 				})
 				await page.waitForSelector('.loading', {
 					state: 'hidden',
-					timeout: 5000,
 				})
 			} else {
 				// For Svelte, wait for the loading state to be applied and then removed
-				await expect(page.locator('button.image-btn')).toBeDisabled({
-					timeout: 5000,
-				})
-				await expect(page.locator('button.image-btn')).toBeEnabled({
-					timeout: 5000,
-				})
+				await expect(page.locator('button.image-btn')).toBeDisabled({})
+				await expect(page.locator('button.image-btn')).toBeEnabled({})
 			}
 
 			// Get the updated image source and title

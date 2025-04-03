@@ -12,9 +12,6 @@
 		"preview": "vite preview",
 		"test:unit": "vitest run",
 		"test:watch": "vitest",
-		"test:e2e": "playwright test",
-		"test:e2e:headed": "playwright test --headed",
-		"test:e2e:debug": "playwright test --debug",
 		"start": "react-scripts start"
 	},
 	"dependencies": {

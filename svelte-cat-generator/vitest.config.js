@@ -8,6 +8,6 @@ export default defineConfig({
 		environment: 'jsdom',
 		globals: true,
 		setupFiles: ['./src/setupTests.js'],
-		exclude: ['node_modules/*', 'e2e-tests/', '*/playwright.config.js'],
+		exclude: ['node_modules/*', '../e2e-tests/', '*/playwright.config.js'],
 	},
 })
