@@ -11,10 +11,6 @@ on:
 jobs:
   lint-format-test:
     runs-on: ubuntu-latest
-    
-    defaults:
-      run:
-        working-directory: ./svelte-cat-generator
         
     steps:
       - name: Checkout code
@@ -27,30 +23,38 @@ jobs:
           cache: 'npm'
           cache-dependency-path: './svelte-cat-generator/package-lock.json'
           
-      - name: Install dependencies
+      - name: Install Svelte dependencies
         run: |
-          npm ci
-          npx playwright install --with-deps
+          cd ./svelte-cat-generator
+          npm i
         
       - name: Check linting
-        run: npm run lint
+        run: |
+          cd ./svelte-cat-generator
+          npm run lint
         
       - name: Check formatting
-        run: npm run format:check
+        run: |
+          cd ./svelte-cat-generator
+          npm run format:check
         
       - name: Run tests
-        run: npm run test:unit
+        run: |
+          cd ./svelte-cat-generator
+          npm run test:unit
 
-      - name: Start Svelte App in Background
-        run: npm run dev &
+      - name: Install Root dependencies
+        run: |
+          npm i
+          npx playwright install --with-deps
 
       - name: Build
-        run: npm run build
+        run: |
+          cd ./svelte-cat-generator
+          npm run build
 
       - name: Run E2E tests
-        run: |
-          cd ../
-          npm run test:e2e
+        run: npm run test:e2e
 
 
   deploy:
@@ -72,9 +76,10 @@ jobs:
 
       - name: Build Svelte App
         run: |
-          npm install --prefix svelte-cat-generator
-          npm run build --prefix svelte-cat-generator
+          cd svelte-cat-generator
+          npm install
+          npm run build
 
       - name: Deploy Svelte to Netlify
         run: |
-          npx netlify deploy --prod --dir=svelte-cat-generator/dist --site=${{ secrets.NETLIFY_SITE_ID_SVELTE }} --auth=${{ secrets.NETLIFY_TOKEN }}
+          npx netlify deploy --prod --dir=svelte-cat-generator/dist --site=${{ secrets.NETLIFY_SITE_ID_REACT }} --auth=${{ secrets.NETLIFY_TOKEN }}

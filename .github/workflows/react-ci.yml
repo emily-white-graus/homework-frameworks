@@ -76,8 +76,9 @@ jobs:
 
       - name: Build React App
         run: |
-          npm install --prefix react-cat-generator
-          npm run build --prefix react-cat-generator
+          cd react-cat-generator
+          npm install
+          npm run build
 
       - name: Deploy React to Netlify
         run: |
