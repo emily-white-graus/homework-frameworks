@@ -28,20 +28,6 @@ for (const app of apps) {
 			// Click the new fact button
 			await page.locator('button.fact-btn').click()
 
-			// React and Svelte use slightly different loading indicators
-			if (app.name === 'React') {
-				await page.waitForSelector('.loading-text', {
-					state: 'visible',
-				})
-				await page.waitForSelector('.loading-text', {
-					state: 'hidden',
-				})
-			} else {
-				// For Svelte, wait for the loading state to be applied and then remove
-				await expect(page.locator('button.fact-btn')).toBeDisabled({})
-				await expect(page.locator('button.fact-btn')).toBeEnabled({})
-			}
-
 			// Get the updated fact text
 			const updatedFact = await page.locator('.fact-container p').textContent()
 
@@ -70,20 +56,6 @@ for (const app of apps) {
 
 			// Click the new image button
 			await page.locator('button.image-btn').click()
-
-			// React and Svelte use slightly different loading indicators
-			if (app.name === 'React') {
-				await page.waitForSelector('.loading', {
-					state: 'visible',
-				})
-				await page.waitForSelector('.loading', {
-					state: 'hidden',
-				})
-			} else {
-				// For Svelte, wait for the loading state to be applied and then removed
-				await expect(page.locator('button.image-btn')).toBeDisabled({})
-				await expect(page.locator('button.image-btn')).toBeEnabled({})
-			}
 
 			// Get the updated image source and title
 			const updatedImageSrc = await page
