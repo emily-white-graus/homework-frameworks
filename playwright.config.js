@@ -30,12 +30,12 @@ export default defineConfig({
 
 	webServer: [
 		{
-			command: 'npm run dev --prefix react-cat-generator -- --port=3030',
+			command: 'cd react-cat-generator && npm run dev -- --port=3030',
 			url: 'http://localhost:3030',
 			reuseExistingServer: !process.env.CI,
 		},
 		{
-			command: 'npm run dev --prefix svelte-cat-generator -- --port=3031',
+			command: 'cd svelte-cat-generator && npm run dev -- --port=3031',
 			url: 'http://localhost:3031',
 			reuseExistingServer: !process.env.CI,
 		},

@@ -26,7 +26,7 @@ jobs:
       - name: Install React dependencies
         run: |
           cd ./react-cat-generator
-          npm ci
+          npm i
         
       - name: Check linting
         run: |
@@ -45,7 +45,7 @@ jobs:
 
       - name: Install Root dependencies
         run: |
-          npm ci
+          npm i
           npx playwright install --with-deps
 
       - name: Build
