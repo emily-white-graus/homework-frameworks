@@ -23,11 +23,10 @@ jobs:
           cache: 'npm'
           cache-dependency-path: './react-cat-generator/package-lock.json'
           
-      - name: Install dependencies
+      - name: Install React dependencies
         run: |
+          cd ./react-cat-generator
           npm ci
-          npm install
-          npx playwright install --with-deps
         
       - name: Check linting
         run: |
@@ -47,15 +46,21 @@ jobs:
       - name: Start React App in Background
         run: |
           cd ./react-cat-generator
-          npm run dev
+          npm run dev &
 
       - name: Build
         run: |
           cd ./react-cat-generator
           npm run build
 
+      - name: Install Root dependencies
+        run: |
+          npm ci
+          npx playwright install --with-deps
+
       - name: Run E2E tests
-        run: npm run test:e2e
+        run: |
+          npm run test
 
 
   deploy:
