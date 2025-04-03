@@ -11,10 +11,6 @@ on:
 jobs:
   lint-format-test:
     runs-on: ubuntu-latest
-    
-    defaults:
-      run:
-        working-directory: ./react-cat-generator
         
     steps:
       - name: Checkout code
@@ -29,27 +25,37 @@ jobs:
           
       - name: Install dependencies
         run: |
+          cd ./react-cat-generator
           npm ci
           npx playwright install --with-deps
         
       - name: Check linting
-        run: npm run lint
+        run: |
+          cd ./react-cat-generator
+          npm run lint
         
       - name: Check formatting
-        run: npm run format:check
+        run: |
+          cd ./react-cat-generator
+          npm run format:check
         
       - name: Run tests
-        run: npm run test:unit
+        run: |
+          cd ./react-cat-generator
+          npm run test:unit
 
       - name: Start React App in Background
-        run: npm run dev &
+        run: |
+          cd ./react-cat-generator
+          npm run dev &
 
       - name: Build
-        run: npm run build
+        run: |
+          cd ./react-cat-generator
+          npm run build
 
       - name: Run E2E tests
         run: |
-          cd ..
           playwright test
 
 
