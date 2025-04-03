@@ -37,7 +37,7 @@ for (const app of apps) {
 					state: 'hidden',
 				})
 			} else {
-				// For Svelte, wait for the loading state to be applied and then removed
+				// For Svelte, wait for the loading state to be applied and then remove
 				await expect(page.locator('button.fact-btn')).toBeDisabled({})
 				await expect(page.locator('button.fact-btn')).toBeEnabled({})
 			}
