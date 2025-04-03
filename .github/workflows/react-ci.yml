@@ -48,7 +48,9 @@ jobs:
         run: npm run build
 
       - name: Run E2E tests
-        run: cd .. && npx playwright test
+        run: |
+          cd ..
+          playwright test
 
 
   deploy:
