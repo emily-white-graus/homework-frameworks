@@ -93,7 +93,7 @@ for (const app of apps) {
 				.locator('.image-container h2')
 				.textContent()
 
-			// Verify the image and title have changed
+			// Verify the image and title have change
 			expect(updatedImageSrc).toBeTruthy()
 			expect(updatedTitle).toBeTruthy()
 			expect(updatedImageSrc).not.toEqual(initialImageSrc)
