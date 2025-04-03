@@ -25,8 +25,8 @@ jobs:
           
       - name: Install dependencies
         run: |
-          cd ./react-cat-generator
           npm ci
+          npm run install
           npx playwright install --with-deps
         
       - name: Check linting
@@ -47,7 +47,7 @@ jobs:
       - name: Start React App in Background
         run: |
           cd ./react-cat-generator
-          npm run dev &
+          npm run dev
 
       - name: Build
         run: |
@@ -55,8 +55,7 @@ jobs:
           npm run build
 
       - name: Run E2E tests
-        run: |
-          npm run test:e2e
+        run: npm run test:e2e
 
 
   deploy:
