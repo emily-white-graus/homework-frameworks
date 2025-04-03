@@ -48,19 +48,13 @@ jobs:
           npm ci
           npx playwright install --with-deps
 
-      - name: Start React App in Background
-        run: |
-          cd ./react-cat-generator
-          npm run dev &
-
       - name: Build
         run: |
           cd ./react-cat-generator
           npm run build
 
       - name: Run E2E tests
-        run: |
-          npm run test:e2e
+        run: npm run test:e2e
 
 
   deploy:
