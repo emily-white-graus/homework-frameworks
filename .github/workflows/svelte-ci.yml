@@ -48,7 +48,7 @@ jobs:
         run: npm run build
 
       - name: Run E2E tests
-        run: cd .. && npm run test:e2e
+        run: cd ../.. && npm run test:e2e
 
   deploy:
     name: Deploy to Netlify
